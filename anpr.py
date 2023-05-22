@@ -15,7 +15,7 @@ INPUT_HEIGHT = 640
 
 
 # LOAD YOLO MODEL
-net = cv2.dnn.readNetFromONNX('..\\Automatic-Number-Plate-Recognition\\weights\\best.onnx') 
+net = cv2.dnn.readNetFromONNX('..\\Automatic-Number-Plate-Recognition-with-YOLOV5\\weights\\best.onnx') 
 net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 
@@ -175,15 +175,17 @@ def extract_text(cropped_image):
 
 
 # test
-img = skimage.io.imread('TEST.jpg')
+img = skimage.io.imread('..\\Automatic-Number-Plate-Recognition-with-YOLOV5\\samples\\TEST3.jpg')
 results = yolo_predictions(img,net)
 roi = croptheROI(img,box_coordinate,nm_index)
 pp_image = preprocessing(roi)
 text = extract_text(pp_image)
+print(text)
 fig = px.imshow(img)
 fig.update_layout(width=700, height=400, margin=dict(l=10, r=10, b=10, t=10))
 fig.update_xaxes(showticklabels=False).update_yaxes(showticklabels=False)
 fig.show()
+
 
 import plotly.io as ip
 ip.renderers.default='browser'
